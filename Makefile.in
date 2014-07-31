@@ -1,14 +1,7 @@
-CC      = gcc -g -Wall -DDEBUG
-INCDIR  = ../../src -I../../../../src/include/ -I../../
+NAME    = coro_demo
+CC      = gcc
+CFLAGS  = -g -Wall
+LDFLAGS =
+DEFS    =
+INCDIR  =
 OBJECTS = main.o
-
-all: ../coro_demo.duda
-
-../coro_demo.duda: $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(DEFS) -shared -o $@ $^ -lc
-
-.c.o:
-	$(CC) $(CFLAGS) $(LDFLAGS) $(DEFS) -I$(INCDIR) -fPIC -c $<
-
-clean:
-	rm -rf *.o *~ *.*duda*
