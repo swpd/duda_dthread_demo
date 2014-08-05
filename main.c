@@ -35,7 +35,7 @@ void consumer(void *data)
     response->end(dr, NULL);
 }
 
-void productor(void *data)
+void producer(void *data)
 {
     duda_dthread_channel_t *chan = data;
     int i;
@@ -50,12 +50,12 @@ void productor(void *data)
 void cb_chan(duda_request_t *dr)
 {
     // unbuffered channel
-    duda_dthread_channel_t *chan = dthread->chan_create(0, monkey->mem_free);
+    duda_dthread_channel_t *chan = dthread->chan_create(0);
     struct bundle *bdl = monkey->mem_alloc(sizeof(*bdl));
     bdl->chan = chan;
     bdl->dr = dr;
     int cid = dthread->create(consumer, bdl);
-    int pid = dthread->create(productor, chan);
+    int pid = dthread->create(producer, chan);
     dthread->chan_set_sender(chan, pid);
     dthread->chan_set_receiver(chan, cid);
     dthread->resume(cid);
